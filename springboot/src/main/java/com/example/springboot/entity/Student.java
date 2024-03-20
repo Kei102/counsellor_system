@@ -1,8 +1,10 @@
 package com.example.springboot.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * @description student
@@ -93,6 +95,18 @@ public class Student implements Serializable {
      * 辅导员工号
      */
     private String counsellorNo;
+
+    /**
+     * 学生入学时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private LocalDate createtime;
+
+    /**
+     * 信息修改时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private LocalDate updatetime;
 
     public Student() {}
 }

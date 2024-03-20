@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.StudentMapper">
+    <insert id="save">
+        insert into student(stu_no,stu_name,stu_sex,stu_phone,createtime,stu_photo)
+        values (#{stuNo},#{stuName},#{stuSex},#{stuPhone},#{createtime},#{stuPhoto})
+
+    </insert>
+    <update id="updateById">
+        update student set stu_no = #{stuNo}, stu_name = #{stuName}, stu_sex = #{stuSex}, stu_phone = #{stuPhone},
+                           updatetime = #{updatetime}, stu_photo = #{stuPhoto}
+        where class_id = #{classId}
+    </update>
+    <delete id="deleteById">
+        delete from student where stu_id = #{id}
+    </delete>
+
+    <select id="list" resultType="com.example.springboot.entity.Student">
+        select * from student order by stu_id desc
+    </select>
+    <select id="listByCondition" resultType="com.example.springboot.entity.Student">
+        select * from student
+        <where>
+            <if test="stuNo != null and stuNo != '' ">
+                stu_no like concat('%', #{stuNo}, '%')
+            </if>
+            <if test="stuName != null and stuName != ''">
+                and stu_name like concat('%', #{styName}, '%')
+            </if>
+        </where>
+        order by stu_id desc
+    </select>
+    <select id="getById" resultType="com.example.springboot.entity.Student">
+        select * from student where stu_id = #{id}
+    </select>
+</mapper>
