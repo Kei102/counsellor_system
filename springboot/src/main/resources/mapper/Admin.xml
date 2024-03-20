@@ -9,4 +9,17 @@
         select * from admin order by admin_id desc
     </select>
 
+    <select id="admintListByCondition" resultType="com.example.springboot.entity.Admin">
+        select * from admin
+        <where>
+            <if test="adminNo != null and adminNo != '' ">
+                admin_no like concat('%', #{adminNo}, '%')
+            </if>
+            <if test="adminName != null and adminName != ''">
+                and admin_name like concat('%', #{adminName}, '%')
+            </if>
+        </where>
+        order by admin_id desc
+    </select>
+
 </mapper>

@@ -1,6 +1,9 @@
 package com.example.springboot.controller;
 
 
+import com.example.springboot.common.Result;
+import com.example.springboot.controller.request.AdminPageRequest;
+import com.example.springboot.controller.request.CounsellorPageRequest;
 import com.example.springboot.entity.Admin;
 import com.example.springboot.service.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +23,13 @@ public class AdminController {
     IAdminService adminService;
 
     @GetMapping("/list")
-    public List<Admin> listAdmins() {
-        return adminService.listAdmins();
+    public Result listAdmins() {
+        List<Admin> admins = adminService.listAdmins();
+        return Result.success(admins);
+    }
+
+    @GetMapping("/page")
+    public Result page(AdminPageRequest adminPageRequest) {
+        return Result.success(adminService.page(adminPageRequest));
     }
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.CounsellorMapper">
+
+    <insert id="departmentSave">
+        insert into department(dp_no,dp_name,dp_leader,dp_lephone)
+        values (#{dpNo},#{dpName},#{dpLeader},#{dpLephone})
+    </insert>
+    <insert id="classSave">
+        insert into class(class_no, class_leader, class_phone, dp_no, counsellor_no)
+        values (#{classNo},#{classLeader},#{classPhone},#{dpNo},#{counsellorNo})
+    </insert>
+    <update id="departmentUpdateBydpId">
+        update department set dp_no = #{dpNo}, dp_name = #{dpName}, dp_leader = #{dpLeader},
+                              dp_lephone = #{dpLephone}, updatetime = #{updatetime}
+        where dp_id = #{dpId}
+    </update>
+    <update id="classUpdateByclassId">
+        update class set class_no = #{classNo}, class_leader = #{classLeader}, class_phone = #{classPhone}, dp_no = #{dpNo},
+                         counsellor_no = #{counsellorNo}, updatetime = #{updatetime}
+        where class_id = #{classId}
+    </update>
+    <delete id="deleteBydpId">
+        delete from department where dp_id = #{id}
+    </delete>
+    <delete id="deleteByclassId">
+        delete from class where class_id = #{id}
+    </delete>
+
+    <select id="listDepartments" resultType="com.example.springboot.entity.Department">
+        select * from department order by dp_id desc
+    </select>
+    <select id="deparmentListByCondition" resultType="com.example.springboot.entity.Department">
+        select * from department
+            <where>
+                <if test="dpNo != null and dpNo != '' ">
+                    dp_no like concat('%', #{dpNo}, '%')
+                </if>
+                <if test="dpName != null and dpName != ''">
+                    and dp_name like concat('%', #{dpName}, '%')
+                </if>
+            </where>
+            order by dp_id desc
+    </select>
+    <select id="getBydpId" resultType="com.example.springboot.entity.Department">
+        select * from department where dp_id = #{id}
+    </select>
+    <select id="listClasses" resultType="com.example.springboot.entity.Class">
+        select * from class order by class_id desc
+    </select>
+    <select id="classtListByCondition" resultType="com.example.springboot.entity.Class">
+        select * from class
+        <where>
+            <if test="classNo != null and classNo != '' ">
+                class_no like concat('%', #{classNo}, '%')
+            </if>
+        </where>
+        order by class_id desc
+    </select>
+    <select id="getByclassId" resultType="com.example.springboot.entity.Class">
+        select * from class where class_id = #{id}
+    </select>
+</mapper>
